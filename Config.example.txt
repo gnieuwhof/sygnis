@@ -1,0 +1,27 @@
+
+        #REGION MySQL
+        /**
+         * @var string Database server URI.
+         */
+        const MYSQL_HOST = 'localhost';
+
+        /**
+         * @var string Database name.
+         */
+        const MYSQL_DATABASE = 'db_name';
+
+        /**
+         * @var string Database username.
+         */
+        const MYSQL_USERNAME = 'user';
+
+        /**
+         * @var string Database password.
+         */
+        const MYSQL_PASSWORD = 'password';
+
+        /**
+         * @var string Default timezone.
+         */
+        const TIMEZONE = 'Europe/Amsterdam';
+        #ENDREGION MySQL
