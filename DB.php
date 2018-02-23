@@ -321,13 +321,15 @@ class DB extends DBBase
      * @param string[] $columnNames
      * @param string $tableName Name of the table.
      * @param IWhere $where Where clause object.
+     * @param boolean $distinct Whether the result should be distinct.
      * @retval mixed[][]
      */
     public static function RetrieveAll(
         IDbmsAdapter $dbmsAdapter,
         array $columnNames,
         $tableName,
-        IWhere $where
+        IWhere $where,
+        $distinct = false
         )
     {
         if( !is_string( $tableName ) )
@@ -343,7 +345,8 @@ class DB extends DBBase
         $query = $queryBuilder->Select(
             $tableName,
             $columnNames,
-            $whereClause
+            $whereClause,
+            $distinct
             );
         
         return parent::ExecuteCollectionReader( $dbmsAdapter, $query, $whereValues );
