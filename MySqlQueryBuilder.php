@@ -263,7 +263,8 @@ class MySqlQueryBuilder implements IQueryBuilder
      * // SELECT (`col1`, `col2`) FROM 'table' WHERE TRUE;
      * @endcode
      */
-    public function Select( $tableName, array $columnNames, $whereClause, $isInner = false )
+    public function Select( $tableName, array $columnNames, $whereClause,
+        $isInner = false, $distinct = false )
     {
         if( !is_string( $tableName ) )
             throw new \InvalidScalarTypeException( 'string', $tableName, '$tableName' );
@@ -281,8 +282,10 @@ class MySqlQueryBuilder implements IQueryBuilder
         
         $separator = ($isInner ? ' ' : PHP_EOL);
         
+        $select = $distinct ? 'SELECT DISTINCT' : 'SELECT';
+        
         $query =
-            'SELECT ' . $preparedColumnNames . $separator .
+            $select = $select . ' ' . $preparedColumnNames . $separator .
             'FROM `' . $tableName . '`';
         
         if( $whereClause != 'TRUE' )
