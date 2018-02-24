@@ -346,6 +346,7 @@ class DB extends DBBase
             $tableName,
             $columnNames,
             $whereClause,
+            false,
             $distinct
             );
         
