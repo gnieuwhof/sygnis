@@ -22,11 +22,13 @@ class MySqlConfig extends DatabaseConfigBase
     public static /*override*/ function Dsn()
     {
         $host = \Config::MYSQL_HOST;
+        $port = \Config::MYSQL_PORT;
         $database = \Config::MYSQL_DATABASE;
 
         return
             'mysql:' .
             'host=' . $host . ';' .
+            'port=' . $port . ';' .
             'dbname=' . $database . ';' .
             'charset=utf8';
     }
