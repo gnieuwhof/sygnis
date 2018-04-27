@@ -70,7 +70,7 @@ if( DEVELOPMENT )
      * @see GetAffectedRowsCount()
      * @param IDbmsAdapter $dbmsAdapter
      * @param string $query The query to execute.
-     * @param string[] $data Array containing query values (optional).
+     * @param mixed[] $data Array containing query values (optional).
      * @retval PDOStatement
      */
     protected static function Execute(
@@ -90,9 +90,52 @@ if( DEVELOPMENT )
         $dbh = $dbmsAdapter->GetDbh();
         $stmt = $dbh->prepare( $query );
         
-        $stmt->execute( $data );
+        for( $i = 0; $i < count( $data ); ++$i )
+        {
+            $binary = null;
+            
+            if( is_array( $data[$i] ) )
+            {
+                $binary = $data[$i];
+            }
+            else if( is_object( $data[$i] ) )
+            {
+                $binary = self::GetFirstArray( $data[$i] );
+            }
+            else
+            {
+                continue;
+            }
+            
+            $data[$i] = implode( array_map( 'chr', $binary ) );
+                
+            $stmt->bindParam( $i + 1, $data[$i], \PDO::PARAM_LOB );
+        }
+        
+        $stmt->execute($data);
         
         return $stmt;
+    }
+    
+    /**
+     * @brief Returns the first array member of the given object.
+     * 
+     * @param object $object
+     * @return mixed[]
+     */
+    private static function GetFirstArray( $object )
+    {
+        $objectArray = (array)$object;
+                
+        foreach( $objectArray as $member )
+        {
+            if( is_array( $member ) )
+            {
+                return $member;
+            }
+        }
+        
+        return null;
     }
     
     /**
