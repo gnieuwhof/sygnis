@@ -6,6 +6,11 @@
         const MYSQL_HOST = 'localhost';
 
         /**
+         * @var string Database server URI
+         */
+        const MYSQL_PORT = '3307';
+
+        /**
          * @var string Database name.
          */
         const MYSQL_DATABASE = 'db_name';
