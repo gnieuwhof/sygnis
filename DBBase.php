@@ -133,6 +133,10 @@ if( DEVELOPMENT )
             {
                 return $member;
             }
+            else if( is_object( $member ) )
+            {
+                return self::GetFirstArray( $member );
+            }
         }
         
         return null;
